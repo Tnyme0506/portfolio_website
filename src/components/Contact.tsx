@@ -30,9 +30,7 @@ export default function Contact() {
     setError('');
 
     try {
-      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, {
-        publicKey: PUBLIC_KEY,
-      });
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
       setStatus('success');
       formRef.current.reset();
     } catch (err) {
