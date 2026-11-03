@@ -158,6 +158,20 @@ export const PROJECTS: Project[] = [
       },
     ],
   },
+  {
+  title: 'Cortex MCP Envoy Gateway',
+  period: 'October 2026',
+  description:
+    'An AI agent gateway that fronts a Cortex-style FastAPI service with MCP tools and Envoy edge routing. Exposes search and grounded agent-query endpoints through a single public port, with mock mode for local demos and a path to real Cortex Agent backends.',
+  tags: ['Python', 'FastAPI', 'MCP', 'Envoy', 'Docker'],
+  image: '/cortex_mcp_envoy_gateway.avif',
+  links: [
+    {
+      label: 'Source',
+      href: 'https://github.com/Tnyme0506/cortex-mcp-envoy-gateway',
+    },
+  ],
+}
 ];
 
 export interface EducationItem {
