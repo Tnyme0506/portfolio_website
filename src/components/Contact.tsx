@@ -30,12 +30,37 @@ export default function Contact() {
     setError('');
 
     try {
-      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
+      const data = new FormData(formRef.current);
+      const senderName = String(data.get('name') ?? '');
+      const senderEmail = String(data.get('email') ?? '');
+      const message = String(data.get('message') ?? '');
+
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: senderName,
+          from_name: senderName,
+          user_name: senderName,
+          email: senderEmail,
+          from_email: senderEmail,
+          user_email: senderEmail,
+          reply_to: senderEmail,
+          message,
+        },
+        PUBLIC_KEY,
+      );
       setStatus('success');
       formRef.current.reset();
     } catch (err) {
+      const detail =
+        err && typeof err === 'object' && 'text' in err ? String(err.text) : '';
       setStatus('error');
-      setError('Something went wrong. Please try again or email me directly.');
+      setError(
+        /invalid grant|reconnect your gmail/i.test(detail)
+          ? 'Gmail access for this form expired. Reconnect Gmail in the EmailJS dashboard, then try again.'
+          : 'Something went wrong. Please try again or email me directly.',
+      );
       console.error(err);
     }
   };
